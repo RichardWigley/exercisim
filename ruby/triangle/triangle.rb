@@ -6,8 +6,8 @@ require 'pry'
 
 class Triangle
 
-  def initialize side_a, side_b, side_c
-    @side_a, @side_b, @side_c = side_a, side_b, side_c
+  def initialize a, b, c
+    @a, @b, @c = a, b, c
   end
 
   def kind
@@ -21,31 +21,31 @@ class Triangle
 
   private
 
-  attr_reader :side_a, :side_b, :side_c
+  attr_reader :a, :b, :c
 
   def equilateral?
-    side_a == side_b && side_b == side_c
+    a == b && b == c
   end
 
   def isosceles?
-    (side_a == side_b || side_a == side_c || side_b == side_c)  && !equilateral?
+    (a == b || a == c || b == c)  && !equilateral?
   end
 
   def valid?
-    !zero_sized? && positive_sides? && triangle_inequality?
+    !zero_sized? && positive_sides? && triangle_equality?
   end
 
   def zero_sized?
-    side_a == 0 && side_b == 0 && side_c == 0
+    a == 0 && b == 0 && c == 0
   end
 
   def positive_sides?
-    side_a > 0 && side_b > 0 && side_c > 0
+    a > 0 && b > 0 && c > 0
   end
 
-  def triangle_inequality?
-    side_a + side_b > side_c &&
-    side_a + side_c > side_b &&
-    side_b + side_c > side_a
+  def triangle_equality?
+    a + b > c &&
+    a + c > b &&
+    b + c > a
   end
 end
