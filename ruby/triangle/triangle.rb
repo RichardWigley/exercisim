@@ -5,14 +5,13 @@ require 'pry'
 
 
 class Triangle
-  attr_reader :side_a, :side_b, :side_c
 
   def initialize side_a, side_b, side_c
     @side_a, @side_b, @side_c = side_a, side_b, side_c
   end
 
   def kind
-    raise TriangleError if invalid?
+    raise TriangleError unless valid?
     case
     when isosceles? then :isosceles
     when equilateral? then :equilateral
@@ -22,6 +21,8 @@ class Triangle
 
   private
 
+  attr_reader :side_a, :side_b, :side_c
+
   def equilateral?
     side_a == side_b && side_b == side_c
   end
@@ -30,21 +31,21 @@ class Triangle
     (side_a == side_b || side_a == side_c || side_b == side_c)  && !equilateral?
   end
 
-  def invalid?
-    no_size? || negative_side? || triangle_inequality?
+  def valid?
+    !zero_sized? && positive_sides? && triangle_inequality?
   end
 
-  def no_size?
+  def zero_sized?
     side_a == 0 && side_b == 0 && side_c == 0
   end
 
-  def negative_side?
-    side_a < 0 || side_b < 0 || side_c < 0
+  def positive_sides?
+    side_a > 0 && side_b > 0 && side_c > 0
   end
 
   def triangle_inequality?
-    (side_a + side_b <= side_c) ||
-    (side_a + side_c <= side_b) ||
-    (side_b + side_c <= side_a)
+    side_a + side_b > side_c &&
+    side_a + side_c > side_b &&
+    side_b + side_c > side_a
   end
 end
