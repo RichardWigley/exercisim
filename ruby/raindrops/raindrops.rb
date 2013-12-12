@@ -1,7 +1,5 @@
-require 'prime'
-
 ####
-# Converts a number to a string
+# Converts a source to a string
 #
 # The contents of the string depends on primefactors
 # - a factor - is a number that divides into another
@@ -10,48 +8,28 @@ require 'prime'
 #
 ####
 class Raindrops
-
   def convert number
-    if primes_in_raindrop? number
-      primes_to_raindrop number
+    sources = generate_sources_from number
+    if sources.any?
+      to_target sources
     else
-      pass_through number
+      number.to_s
     end
   end
 
   private
 
-  def primes_in_raindrop? number
-    prime_factors_of(number)
-          .any? { |prime_factor| rain_drop_number? prime_factor }
+  TRANSLATABLES = {
+    3 => 'Pling',
+    5 => 'Plang',
+    7 => 'Plong',
+  }
+
+  def generate_sources_from number
+    TRANSLATABLES.select { |translatable, _| number.modulo(translatable).zero? }
   end
 
-  def primes_to_raindrop number
-    prime_factors_of(number)
-          .map { |prime_factor| to_raindrop prime_factor }.join
-  end
-
-  def pass_through number
-    number.to_s
-  end
-
-  def prime_factors_of number
-    number.prime_division.map { |prime_factor_set| prime_factor_set.first}
-  end
-
-  RAIN_DROP_CONVERTABLE = [3, 5, 7]
-
-  def rain_drop_number? candidate
-    RAIN_DROP_CONVERTABLE.include? candidate
-  end
-
-  def to_raindrop candidate
-    case candidate
-      when 3 then 'Pling'
-      when 5 then 'Plang'
-      when 7 then 'Plong'
-      else nil
-    end
+  def to_target sources
+    sources.map(&:last).join
   end
 end
-
