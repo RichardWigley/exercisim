@@ -1,7 +1,7 @@
 class Proverb
-  def initialize(*the_lost)
+  def initialize(*the_lost, qualifier: nil)
     @the_lost = the_lost
-    @qualifier = extract_qualifier the_lost
+    @qualifier = "#{qualifier} " if qualifier
   end
 
   def to_s
@@ -13,22 +13,18 @@ class Proverb
   attr_reader :the_lost, :qualifier
 
   def verse
-    body_of_verse + end_of_verse
+    body + ending
   end
 
-  def body_of_verse
-    (the_lost.size-1).times.map { |count| line_of_verse count }.join
+  def body
+    @the_lost.each_cons(2).map { |cause, effect| line cause, effect }.join
   end
 
-  def end_of_verse
-    "And all for the want of a #{qualifier}#{the_lost[0]}."
+  def ending
+    "And all for the want of a #{qualifier}#{the_lost.first}."
   end
 
-  def line_of_verse count
-    "For want of a #{the_lost[count]} the #{the_lost[count+1]} was lost.\n"
-  end
-
-  def extract_qualifier the_lost
-    the_lost.last.is_a?(Hash) ? the_lost.pop[:qualifier] + ' ' : ''
+  def line cause, effect
+    "For want of a #{cause} the #{effect} was lost.\n"
   end
 end
