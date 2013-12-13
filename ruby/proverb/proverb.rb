@@ -17,7 +17,7 @@ class Proverb
   end
 
   def body
-    @the_lost.each_cons(2).map { |cause, effect| line cause, effect }.join
+    the_lost.each_cons(2).map { |cause, effect| line cause, effect }.join
   end
 
   def ending
