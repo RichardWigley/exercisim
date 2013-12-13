@@ -14,7 +14,7 @@ class Anagram
   end
 
   def duplicate? candidate
-    @subject.casecmp(candidate) == 0
+    @subject.casecmp(candidate).zero?
   end
 
   def alphagram? candidate

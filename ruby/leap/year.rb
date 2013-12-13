@@ -22,6 +22,6 @@ class Year
   end
 
   def divisible_by? years
-    @year % years == 0
+    (@year % years).zero?
   end
 end
