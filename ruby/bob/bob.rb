@@ -1,8 +1,8 @@
-class CommunicationRecognition
-  attr_accessor :communication
+class Dialogue
+  attr_accessor :communicate
 
   def ask_question?
-    communication.end_with? '?'
+    communicate.end_with? '?'
   end
 
   def shouting?
@@ -10,17 +10,17 @@ class CommunicationRecognition
   end
 
   def silent?
-    communication.strip.empty?
+    communicate.strip.empty?
   end
 
   private
 
   def any_alphabetic_chars?
-    communication.match(match_alphabetic)
+    communicate.match(match_alphabetic)
   end
 
   def nothing_in_lowercase?
-    communication.match(match_lowercase).nil?
+    communicate.match(match_lowercase).nil?
   end
 
   def match_lowercase
@@ -35,7 +35,7 @@ end
 class Bob
   attr_reader :classify
 
-  def initialize classify = CommunicationRecognition.new
+  def initialize classify = Dialogue.new
     @classify = classify
   end
 
@@ -44,8 +44,8 @@ class Bob
   SILENT_RESPONSE   = 'Fine. Be that way!'
   DEFAULT_RESPONSE  = 'Whatever.'
 
-  def hey communication
-    classify.communication = communication
+  def hey communicate
+    classify.communicate = communicate
     case
     when classify.shouting? then YELL_RESPONSE
     when classify.ask_question? then QUESTION_RESPONSE
