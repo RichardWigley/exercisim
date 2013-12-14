@@ -4,7 +4,7 @@ require 'pry'
 class DNA
   def initialize strand
     validate_arguments(strand)
-    @nucleotides = strandify strand
+    @nucleotides = build_nucleotide_frequency strand
   end
 
   def count match_nucleotide
@@ -27,9 +27,9 @@ class DNA
     raise(ArgumentError, 'Strands should only contain ACGT') unless nucleic_sequence(strand)
   end
 
-  def strandify strand
-    strand.chars.each_with_object(Hash.new(0)) do |nucleotide, hsh|
-      hsh[nucleotide] += 1
+  def build_nucleotide_frequency strand
+    strand.chars.each_with_object(Hash.new(0)) do |nucleotide, nucleotide_frequency|
+      nucleotide_frequency[nucleotide] += 1
     end
   end
 
