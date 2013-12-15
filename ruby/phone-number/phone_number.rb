@@ -1,11 +1,9 @@
-
 class PhoneNumber
   attr_reader :number
   INVALID_NUMBER = '0000000000'
 
   def initialize number
-    @number = INVALID_NUMBER
-    @number = clean_number(number) if valid?(clean_digits(number))
+    @number = clean_number(number)
   end
 
   def area_code
@@ -18,16 +16,21 @@ class PhoneNumber
 
   private
 
-  def clean_digits dirty_number
-    dirty_number.gsub(/\D/, '')
-  end
-
   def clean_number dirty_number
-    clean_digits(dirty_number).chars.last(10).join
+    cleaning = dirty_number.gsub(/\D/, '')
+    return INVALID_NUMBER unless valid?(cleaning)
+    cleaning.chars.last(10).join
   end
 
-  def valid? number
-    number.size == 10 || \
+  def valid? dirty_number
+    local?(dirty_number) || international?(dirty_number)
+  end
+
+  def local? number
+    number.size == 10
+  end
+
+  def international? number
     number.size == 11 && number.start_with?('1')
   end
 
