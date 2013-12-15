@@ -1,3 +1,5 @@
+require 'pry'
+
 class PhoneNumber
   attr_reader :number
   INVALID_NUMBER = '0000000000'
@@ -17,13 +19,12 @@ class PhoneNumber
   private
 
   def clean_number dirty_number
-    cleaning = dirty_number.gsub(/\D/, '')
-    return INVALID_NUMBER unless valid?(cleaning)
-    cleaning.chars.last(10).join
+    return INVALID_NUMBER unless valid?(to_digits dirty_number)
+    to_digits(dirty_number).chars.last(10).join
   end
 
-  def valid? dirty_number
-    local?(dirty_number) || international?(dirty_number)
+  def valid? number
+    local?(number) || international?(number)
   end
 
   def local? number
@@ -32,6 +33,10 @@ class PhoneNumber
 
   def international? number
     number.size == 11 && number.start_with?('1')
+  end
+
+  def to_digits number
+    number.scan(/\d+/).join
   end
 
   def prefix
