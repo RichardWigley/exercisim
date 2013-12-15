@@ -1,5 +1,3 @@
-require 'pry'
-
 class PhoneNumber
   attr_reader :number
   INVALID_NUMBER = '0000000000'
