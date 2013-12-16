@@ -3,6 +3,7 @@ class PhoneNumber
   INVALID_NUMBER = '0000000000'
   DIGITS_IN_LOCAL = 10
   DIGITS_IN_INTERNATIONAL = 11
+  INTERNATIONAL_CODE = '1'
 
   def initialize number
     @number = clean_number(number)
@@ -20,7 +21,7 @@ class PhoneNumber
 
   def clean_number dirty_number
     return INVALID_NUMBER unless valid?(to_digits dirty_number)
-    to_digits(dirty_number).chars.last(DIGITS_IN_LOCAL).join
+    to_digits(dirty_number)[-DIGITS_IN_LOCAL .. -1]
   end
 
   def valid? number
@@ -36,7 +37,8 @@ class PhoneNumber
   end
 
   def international? number
-    number.size == DIGITS_IN_INTERNATIONAL && number.start_with?('1')
+    number.size == DIGITS_IN_INTERNATIONAL &&
+    number.start_with?(INTERNATIONAL_CODE)
   end
 
   def prefix
