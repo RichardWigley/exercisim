@@ -7,16 +7,14 @@ class School
   end
 
   def add name, grade
-    @db[grade].push name
+    db[grade].push name
   end
 
   def grade year
-    @db[year]
+    db[year]
   end
 
   def sort
-    Hash[@db.sort].each do |_, students|
-      students.sort!
-    end
+    Hash[db.sort].each_value { |students| students.sort! }
   end
 end
