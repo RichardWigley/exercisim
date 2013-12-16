@@ -6,11 +6,19 @@ class PhoneNumber
   INTERNATIONAL_CODE = '1'
 
   def initialize number
-    @number = clean_number(number)
+    @number = clean number
   end
 
   def area_code
     number[0..2]
+  end
+
+  def prefix
+    number[3..5]
+  end
+
+  def identifier
+    number[6..9]
   end
 
   def to_s
@@ -19,9 +27,9 @@ class PhoneNumber
 
   private
 
-  def clean_number dirty_number
-    return INVALID_NUMBER unless valid?(to_digits dirty_number)
-    to_digits(dirty_number)[-DIGITS_IN_LOCAL .. -1]
+  def clean number
+    return INVALID_NUMBER unless valid?(to_digits number)
+    to_digits(number)[-DIGITS_IN_LOCAL .. -1]
   end
 
   def valid? number
@@ -39,13 +47,5 @@ class PhoneNumber
   def international? number
     number.size == DIGITS_IN_INTERNATIONAL &&
     number.start_with?(INTERNATIONAL_CODE)
-  end
-
-  def prefix
-    number[3..5]
-  end
-
-  def identifier
-    number[6..9]
   end
 end
