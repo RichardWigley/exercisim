@@ -1,20 +1,20 @@
 class School
+
   attr_reader :db
-
-  # in the event of a unknown hash it intiailizes a new hash
   def initialize
-    @db = Hash.new {|hash,grade| hash[grade] = [] }
+    @db = Hash.new { |db, grade| db[grade] = [] }
   end
 
-  def add name, grade
-    db[grade].push name
+  def add(student, grade)
+    db[grade] << student
   end
 
-  def grade year
-    db[year]
+  def grade(level)
+    db[level]
   end
 
   def sort
-    Hash[db.sort].each_value { |students| students.sort! }
+    sorted = db.map { |grade, students| [ grade, students.sort ] }.sort
+    Hash[sorted]
   end
 end
