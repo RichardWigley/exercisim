@@ -1,19 +1,12 @@
 class Gigasecond
-  DAYS_IN_A_GIGASECOND = 11574
+  GIGASECOND = 1_000_000_000
 
-  def initialize birth_date
-    @birth_date = birth_date
+  def initialize(date_of_birth)
+    @born_on = date_of_birth
   end
 
   def date
-    gigasecond_birthday
+    (@born_on.to_time + GIGASECOND).to_date
   end
 
-  private
-
-  attr_reader :birth_date
-
-  def gigasecond_birthday
-    birth_date + DAYS_IN_A_GIGASECOND
-  end
 end
