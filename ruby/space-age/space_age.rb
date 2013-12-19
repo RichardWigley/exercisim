@@ -5,7 +5,7 @@ class SpaceAge
     @seconds = seconds
   end
 
-  planets_orbital_period_in_earth_years = {
+  PLANET_YEARS = {
     mercury:  0.2408467,
     venus:    0.61519726,
     earth:    1,
@@ -16,10 +16,10 @@ class SpaceAge
     neptune: 164.79132,
   }
 
-  planets_orbital_period_in_earth_years.each do |planet, orbital_period_in_earth_years|
+  PLANET_YEARS.each do |planet, orbital_years|
 
     define_method "on_#{planet}" do
-      age_in_planet_years orbital_period_in_earth_years
+      age_in_planet_years orbital_years
     end
 
   end
@@ -28,8 +28,8 @@ class SpaceAge
 
   ONE_EARTH_YEAR_IN_SECONDS = 31557600.0
 
-  def age_in_planet_years orbital_period_in_earth_years
-    (seconds_to_earth_years / orbital_period_in_earth_years).round(2)
+  def age_in_planet_years orbital_years
+    (seconds_to_earth_years / orbital_years).round(2)
   end
 
   def seconds_to_earth_years
