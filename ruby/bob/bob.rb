@@ -1,7 +1,7 @@
 class Dialogue
   attr_accessor :communicate
 
-  def ask_question?
+  def inquisitive?
     communicate.end_with? '?'
   end
 
@@ -48,7 +48,7 @@ class Bob
     classify.communicate = communicate
     case
     when classify.shouting? then YELL_RESPONSE
-    when classify.ask_question? then QUESTION_RESPONSE
+    when classify.inquisitive? then QUESTION_RESPONSE
     when classify.silent? then SILENT_RESPONSE
     else DEFAULT_RESPONSE
     end
