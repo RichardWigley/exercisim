@@ -1,6 +1,6 @@
 class SpaceAge
   attr_reader :seconds
-  EARTH_YEAR = 31557600
+  EARTH_YEAR = 31_557_600
 
   def initialize(seconds)
     @seconds = seconds
