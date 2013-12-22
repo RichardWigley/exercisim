@@ -19,13 +19,13 @@ class SpaceAge
 
   ORBITAL_PERIOD.each do |planet, orbit_ratio|
     define_method "on_#{planet}" do
-      (earth_seconds / orbit_ratio).round(2)
+      (earth_years / orbit_ratio).round(2)
     end
   end
 
   private
 
-  def earth_seconds
+  def earth_years
     seconds / EARTH_YEAR.to_f
   end
 end
